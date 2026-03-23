@@ -50,7 +50,7 @@ class DBManager:
         """Получает список всех вакансий, в названии которых содержатся переданные в метод слова"""
         conn = get_connection(self.dbname)
         cur = conn.cursor()
-        cur.execute("SELECT name_vac FROM vacancies WHERE name_vac LIKE %s", (f"%{keyword}%",))
+        cur.execute("SELECT name_vac FROM vacancies WHERE name_vac ILIKE %s", (f"%{keyword}%",))
         data = cur.fetchall()
         conn.close()
         return data
