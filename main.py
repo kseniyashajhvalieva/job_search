@@ -1,4 +1,4 @@
-from src.db_manager import create_database, create_tables, insert_employers, insert_vacancies
+from src.db_utils import create_database, create_tables, insert_employers, insert_vacancies
 from src.api import get_employer_info, get_vacancies_by_employer
 
 create_database("hh_parser")
