@@ -51,11 +51,24 @@ def create_tables(dbname):
                 )
     conn.close()
 
+def insert_employers(dbname, employers_tuples):
+    """Заполнение таблицы employers данными из API"""
+    conn = get_connection(dbname)
+    conn.autocommit = True
+    cur = conn.cursor()
 
-# conn = get_connection("hh_parser")
-# conn.autocommit = True
-# cur = conn.cursor()
-#
-# cur.execute("INSERT INTO")
-#
-# conn.close()
+    cur.executemany("INSERT INTO employers (employer_id, name_emp, site_url) VALUES (%s, %s, %s)",
+                    employers_tuples)
+
+    conn.close()
+
+def insert_vacancies(dbname, vacancies_tuples):
+    """Заполнение таблицы vacancies данными из API"""
+    conn = get_connection(dbname)
+    conn.autocommit = True
+    cur = conn.cursor()
+
+    cur.executemany("INSERT INTO vacancies (employer_id, name_vac, salary_from, salary_to, salary_currency, "
+                "alternate_url) VALUES (%s, %s, %s, %s, %s, %s)", vacancies_tuples)
+
+    conn.close()

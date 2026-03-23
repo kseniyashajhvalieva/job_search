@@ -1,4 +1,4 @@
-from src.db_manager import create_database, create_tables
+from src.db_manager import create_database, create_tables, insert_employers
 from src.api import get_employer_info, get_vacancies_by_employer
 
 create_database("hh_parser")
@@ -16,3 +16,5 @@ for id in employer_id:
 for id in employer_id:
     data = get_vacancies_by_employer(id)
     vacancies_data.append(data['items'])
+
+insert_employers("hh_parser", employers_data)
