@@ -1,4 +1,4 @@
-from db_utils import get_connection
+from src.db_utils import get_connection
 
 class DBManager:
 
@@ -9,8 +9,8 @@ class DBManager:
         """Получает список всех компаний и количество вакансий у каждой компании"""
         conn = get_connection(self.dbname)
         cur = conn.cursor()
-        cur.execute("SELECT employer_id, name_emp, COUNT(DISTINCT name_vac) FROM employers INNER JOIN vacancies "
-                    "ON employers.employer_id=vacancies.employer_id GROUP BY employer_id, name_emp")
+        cur.execute("SELECT employers.employer_id, name_emp, COUNT(DISTINCT name_vac) FROM employers INNER JOIN vacancies "
+                    "ON employers.employer_id=vacancies.employer_id GROUP BY employers.employer_id, name_emp")
         data = cur.fetchall()
         conn.close()
         return data
@@ -20,7 +20,7 @@ class DBManager:
       названия вакансии и зарплаты и ссылки на вакансию."""
         conn = get_connection(self.dbname)
         cur = conn.cursor()
-        cur.execute("SELECT employer_id, name_emp, name_vac, salary_from|| ' - ' ||salary_to as salary, "
+        cur.execute("SELECT employers.employer_id, name_emp, name_vac, salary_from|| ' - ' ||salary_to as salary, "
                     "salary_currency, alternate_url FROM employers INNER JOIN vacancies "
                     "ON employers.employer_id=vacancies.employer_id")
         data = cur.fetchall()
@@ -50,7 +50,7 @@ class DBManager:
         """Получает список всех вакансий, в названии которых содержатся переданные в метод слова"""
         conn = get_connection(self.dbname)
         cur = conn.cursor()
-        cur.execute("SELECT name_vac FROM vacancies WHERE name_vac LIKE %s", (f"%{keyword}%",))
+        cur.execute("SELECT name_vac FROM vacancies WHERE name_vac ILIKE %s", (f"%{keyword}%",))
         data = cur.fetchall()
         conn.close()
         return data
