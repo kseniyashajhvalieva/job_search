@@ -58,14 +58,14 @@ def insert_employers(dbname: str, employers_tuples: list[tuple[int, str, str]]) 
     conn.autocommit = True
     cur = conn.cursor()
 
-    cur.executemany("INSERT INTO employers (employer_id, name_emp, site_url) VALUES (%s, %s, %s)",
-                    employers_tuples)
+    cur.executemany("INSERT INTO employers (employer_id, name_emp, site_url) VALUES (%s, %s, %s)", employers_tuples)
 
     conn.close()
 
 
-def insert_vacancies(dbname: str, vacancies_tuples: list[tuple[int, str, int | None, int | None, str | None,
-str]]) -> None:
+def insert_vacancies(
+    dbname: str, vacancies_tuples: list[tuple[int, str, int | None, int | None, str | None, str]]
+) -> None:
     """Заполнение таблицы vacancies данными из API"""
     conn = get_connection(dbname)
     conn.autocommit = True

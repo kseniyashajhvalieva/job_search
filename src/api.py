@@ -1,5 +1,6 @@
-import requests
 from typing import Any
+
+import requests
 
 
 def get_employer_info(id: int) -> dict[str, Any]:
