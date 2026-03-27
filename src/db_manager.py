@@ -32,14 +32,14 @@ class DBManager:
         conn.close()
         return data
 
-    def get_avg_salary(self) -> list[tuple[float, float]]:
+    def get_avg_salary(self) -> tuple[float | None, float | None]:
         """Получает среднюю зарплату по вакансиям"""
         conn = get_connection(self.dbname)
         cur = conn.cursor()
         cur.execute("SELECT AVG(salary_from), AVG(salary_to) FROM vacancies")
-        data = cur.fetchall()
+        row = cur.fetchone()
         conn.close()
-        return data
+        return row
 
     def get_vacancies_with_higher_salary(self) -> list[tuple[str, int]]:
         """Получает список всех вакансий, у которых зарплата выше средней по всем вакансиям."""
