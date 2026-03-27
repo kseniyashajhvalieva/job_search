@@ -2,6 +2,15 @@ from src.db_utils import get_connection
 
 
 class DBManager:
+    """Утилитный класс для чтения данных из PostgreSQL.
+
+        Предполагается, что в БД есть таблицы:
+        - employers(employer_id, name_emp, site_url)
+        - vacancies(employer_id, name_vac, salary_from, salary_to, salary_currency, alternate_url)
+
+        Методы возвращают результаты SQL-запросов как списки кортежей (fetchall),
+        либо одиночные значения (fetchone) там, где это логично.
+        """
 
     def __init__(self, dbname: str) -> None:
         self.dbname = dbname
